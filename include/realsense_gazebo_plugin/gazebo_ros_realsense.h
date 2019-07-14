@@ -3,22 +3,23 @@
 
 #include "realsense_gazebo_plugin/RealSensePlugin.h"
 
-#include <ros/ros.h>
-#include <sensor_msgs/CameraInfo.h>
-#include <sensor_msgs/Image.h>
-#include <sensor_msgs/image_encodings.h>
-
-#include <image_transport/image_transport.h>
-#include <camera_info_manager/camera_info_manager.h>
+#include <gazebo/common/Plugin.hh>
+#include <gazebo/common/common.hh>
+#include <gazebo/physics/PhysicsTypes.hh>
+#include <gazebo/physics/physics.hh>
+#include <gazebo/rendering/DepthCamera.hh>
+#include <gazebo/sensors/sensors.hh>
+#include <sdf/sdf.hh>
 
 #include <string>
 #include <memory>
 
-namespace gazebo
+namespace gazebo 
 {
-  /// \brief A plugin that simulates Real Sense camera streams.
-  class GazeboRosRealsense : public RealSensePlugin
-  {
+
+  class GazeboRealsensePrivate;
+    /// \brief A plugin that simulates Real Sense camera streams.
+  class GazeboRosRealsense : public RealSensePlugin {
     /// \brief Constructor.
     public: GazeboRosRealsense();
 
@@ -37,16 +38,9 @@ namespace gazebo
     public: virtual void OnNewFrame(const rendering::CameraPtr cam,
                                     const transport::PublisherPtr pub);
 
-    protected: boost::shared_ptr<camera_info_manager::CameraInfoManager> camera_info_manager_;
-
-    /// \brief A pointer to the ROS node.
-    ///  A node will be instantiated if it does not exist.
-    protected: ros::NodeHandle* rosnode_;
-    private: image_transport::ImageTransport* itnode_;
-    protected: image_transport::CameraPublisher color_pub_, ir1_pub_, ir2_pub_, depth_pub_;
-
-    /// \brief ROS image messages
-    protected: sensor_msgs::Image image_msg_, depth_msg_;
+private:
+  /// Private data pointer
+  std::unique_ptr<GazeboRealsensePrivate> impl_;
   };
 }
 #endif /* _GAZEBO_ROS_REALSENSE_PLUGIN_ */
