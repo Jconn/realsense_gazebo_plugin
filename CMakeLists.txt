@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(realsense_gazebo_plugin)
+project(ros_realsense_gazebo_plugin)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -44,15 +44,16 @@ link_directories(${gazebo_dev_LIBRARY_DIRS})
 
 
 # gazebo_ros_diff_drive
-add_library(realsense_gazebo_plugin SHARED
+add_library(ros_realsense_gazebo_plugin SHARED
     src/RealSensePlugin.cpp
     src/gazebo_ros_realsense.cpp
 )
-ament_target_dependencies(realsense_gazebo_plugin
+ament_target_dependencies(ros_realsense_gazebo_plugin
   "camera_info_manager"
   "gazebo_dev"
   "gazebo_ros"
   "geometry_msgs"
+  "image_transport"
   "nav_msgs"
   "rclcpp"
   "tf2"
@@ -61,7 +62,7 @@ ament_target_dependencies(realsense_gazebo_plugin
 )
 
 
-ament_export_libraries(realsense_gazebo_plugin)
+ament_export_libraries(ros_realsense_gazebo_plugin)
 
 ament_export_include_directories(include)
 
@@ -81,7 +82,7 @@ install(DIRECTORY include/
         DESTINATION include)
 
 install(TARGETS
-    realsense_gazebo_plugin
+    ros_realsense_gazebo_plugin
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)

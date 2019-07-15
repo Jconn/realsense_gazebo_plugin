@@ -37,9 +37,6 @@ namespace gazebo
             /// A pointer to the GazeboROS node.
             gazebo_ros::Node::SharedPtr rosnode_{nullptr};
 
-            /// Image publisher.
-            std::shared_ptr<image_transport::ImageTransport> itnode_;
-
             /// \brief ROS image messages
             sensor_msgs::msg::Image image_msg, depth_msg;
 
@@ -78,6 +75,7 @@ namespace gazebo
     GZ_REGISTER_MODEL_PLUGIN(GazeboRosRealsense)
 
         GazeboRosRealsense::GazeboRosRealsense()
+        : impl_(std::make_unique<GazeboRealsensePrivate>())
         {
         }
 
@@ -99,11 +97,11 @@ namespace gazebo
         }
         */
 
-        RCLCPP_INFO(impl_->rosnode_->get_logger(), "Realsense Gazebo ROS plugin loading");
-
         RealSensePlugin::Load(_model, _sdf);
 
         this->impl_->rosnode_ = gazebo_ros::Node::Get(_sdf);
+
+        RCLCPP_INFO(impl_->rosnode_->get_logger(), "Realsense Gazebo ROS plugin loading");
 
         // initialize camera_info_manager
         // Initialize camera_info_manager
@@ -111,12 +109,10 @@ namespace gazebo
                 impl_->rosnode_.get(), this->GetHandle());
 
 
-        this->impl_->itnode_ = std::make_shared<image_transport::ImageTransport>(this->impl_->rosnode_);
-
-        this->impl_->color_pub_ = this->impl_->itnode_->advertiseCamera("camera/color/image_raw", 2);
-        this->impl_->ir1_pub_ = this->impl_->itnode_->advertiseCamera("camera/ir/image_raw", 2);
-        this->impl_->ir2_pub_ = this->impl_->itnode_->advertiseCamera("camera/ir2/image_raw", 2);
-        this->impl_->depth_pub_ = this->impl_->itnode_->advertiseCamera("camera/depth/image_raw", 2);
+        this->impl_->color_pub_ = image_transport::create_camera_publisher(impl_->rosnode_.get(), "camera/color/image_raw");
+        this->impl_->ir1_pub_ =   image_transport::create_camera_publisher(impl_->rosnode_.get(),"camera/ir/image_raw"    );
+        this->impl_->ir2_pub_ =   image_transport::create_camera_publisher(impl_->rosnode_.get(),"camera/ir2/image_raw"   );
+        this->impl_->depth_pub_ = image_transport::create_camera_publisher(impl_->rosnode_.get(),"camera/depth/image_raw" );
     }
 
     void GazeboRosRealsense::OnNewFrame(const rendering::CameraPtr cam,
