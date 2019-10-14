@@ -17,30 +17,31 @@
 namespace gazebo 
 {
 
-  class GazeboRealsensePrivate;
+    class GazeboRealsensePrivate;
     /// \brief A plugin that simulates Real Sense camera streams.
-  class GazeboRosRealsense : public RealSensePlugin {
-    /// \brief Constructor.
-    public: GazeboRosRealsense();
+    class GazeboRosRealsense : public RealSensePlugin {
 
-    /// \brief Destructor.
-    public: ~GazeboRosRealsense();
+        /// \brief Constructor.
+        public: GazeboRosRealsense();
 
-    // Documentation Inherited.
-    public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+                /// \brief Destructor.
+        public: ~GazeboRosRealsense();
 
-    /// \brief Callback that publishes a received Depth Camera Frame as an
-    /// ImageStamped message.
-    public: virtual void OnNewDepthFrame();
+                // Documentation Inherited.
+        public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
 
-    /// \brief Callback that publishes a received Camera Frame as an
-    /// ImageStamped message.
-    public: virtual void OnNewFrame(const rendering::CameraPtr cam,
-                                    const transport::PublisherPtr pub);
+                /// \brief Callback that publishes a received Depth Camera Frame as an
+                /// ImageStamped message.
+        public: virtual void OnNewDepthFrame();
 
-private:
-  /// Private data pointer
-  std::unique_ptr<GazeboRealsensePrivate> impl_;
-  };
+                /// \brief Callback that publishes a received Camera Frame as an
+                /// ImageStamped message.
+        public: virtual void OnNewFrame(const rendering::CameraPtr cam,
+                        const transport::PublisherPtr pub);
+
+        private:
+                /// Private data pointer
+                std::unique_ptr<GazeboRealsensePrivate> impl_;
+    };
 }
 #endif /* _GAZEBO_ROS_REALSENSE_PLUGIN_ */

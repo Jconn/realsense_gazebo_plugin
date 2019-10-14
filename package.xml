@@ -7,7 +7,7 @@
     Robot-independent Gazebo plugins for sensors, motors and dynamic reconfigurable components.
   </description>
 
-  <maintainer email="jrivero@osrfoundation.org">Jose Luis Rivero</maintainer>
+  <maintainer email="john.connolly@mekaworks.com">John Connolly</maintainer>
 
   <license>BSD, Apache 2.0</license>
 
@@ -15,7 +15,7 @@
   <url type="bugtracker">https://github.com/ros-simulation/gazebo_ros_pkgs/issues</url>
   <url type="repository">https://github.com/ros-simulation/gazebo_ros_pkgs</url>
 
-  <author>John Hsu</author>
+  <author>John Connolly</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

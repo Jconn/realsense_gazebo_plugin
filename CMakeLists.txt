@@ -26,6 +26,7 @@ find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(image_geometry REQUIRED)
 
 include_directories(include
   ${gazebo_dev_INCLUDE_DIRS}
@@ -53,6 +54,7 @@ ament_target_dependencies(ros_realsense_gazebo_plugin
   "gazebo_dev"
   "gazebo_ros"
   "geometry_msgs"
+  "image_geometry"
   "image_transport"
   "nav_msgs"
   "rclcpp"
