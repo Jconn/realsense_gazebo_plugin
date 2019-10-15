@@ -166,7 +166,7 @@ namespace gazebo
 
 
         this->impl_->pub_point_cloud_ = this->impl_->rosnode_->create_publisher<sensor_msgs::msg::PointCloud2>(
-                "camera/pointcloud_jc/image_raw", rclcpp::SensorDataQoS());
+                "camera/depth/color/points", rclcpp::SensorDataQoS());
 
     }
 
